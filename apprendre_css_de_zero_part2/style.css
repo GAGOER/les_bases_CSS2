@@ -1,0 +1,425 @@
+/* On va faire des variables pour toutes la couleur */
+:root {
+    --color1: #ede4d0;
+    --color2: pink;
+    --color3: #393b4b;
+    --color4: rgb(18, 19, 19);
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    /* Le mettre en generale car ça va nous aider a mieux mettre nos boites*/
+    box-sizing: border-box;
+}
+
+body {
+    background: url(./bg.jpg) center/cover;
+    /* Pour que l image prend la hauteur a 100% */
+    height: 100vh;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    /* Ici on a utiliser la couleur d un de nos varieble pour la couleur du text*/
+    color: var(--color1);
+    /* Permet de modifier les dimensions d un element afin de remplir l espace *
+    * disponible de sont contenaur */
+    display: flex;
+    /* ça centre les elements verticalement */
+    align-items: center;
+    /* ça centre les elements horizontalement*/
+    justify-content: center;
+    /* Pour dire que tout ce qui depasse du body est cacher (ça va tres bien avec *
+    * l animation du vessaux car le vesseaux va en dehor de la page*/
+    overflow: hidden;
+
+}
+
+.card {
+    background: rgba(0, 0, 0, 0.5);
+    /* Ici on vient de faire une calcule avec la methode "calc()", on vient de *
+    *dire que l on veut que la largeur prend 100% mais doit laisser 50px sur les*
+    * coté (moins 50%) */
+    width: calc(100% - 50px);
+    padding: 20px 20px 6px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.507);
+    border-radius: 5px;
+    /* On va creer un flou deriere ( a l ariere plans de la div, il y a une opacité deriere mais il n y a *
+    * pas de floue, et la on vient de dire que l on veut que ce soit flou de 5px */
+    backdrop-filter: blur(5px);
+}
+
+/* Ici on va utiliser les "before" et les "after", on va l'utiliser pour metre une *
+* etoile en haut a droit de la div "card", on va accoller a la div l'element que l on *
+* veut */
+.card:before {
+    /* On a pris l'etoil dans un site (https://www.toptal.com/designers/htmlarrows/symbols/) *
+    * et on l'a mis, on aurait pu mettre autre chose ma c est ça qui fait la contenue */
+    content: "\2730";
+    /* C est comme si il n occupe plus d espace et on peut ainsi la mettre ou on veut dans la div */
+    position: absolute;
+    top: 14px;
+    right: 20px;
+    font-size: 2.4rem;
+}
+
+h1 {
+    margin-bottom: 24px;
+    position: relative;
+}
+
+/* On va faire une barre en dessous du titre "h1", le meilleur moyen pour faire une bare est de faire *
+* un befor ou after */
+h1::after {
+    content: "";
+    position: absolute;
+    background: var(--color2);
+    height: 1px;
+    width: 80%;
+    /* Il faut que le parent soit en position relative pour qu elle soit en bas du titre */
+    bottom: -10px;
+    /* Pour le mettre au centre, mais elle est centrer en haut a gauche donc on utilise la 2em ligne qui suit */
+    left: 50%;
+    /* On a fait un "scaleX()" pour que la barre a une espace de 0 ( c est pour l animation*/
+    transform: translateX(-50%) scaleX(0);
+    /* Ici c est pour l animation, on lui a donner un nom, on a fait que ça dure 10sec et un "ease-in-out" *
+    * pour dire que c est lent au debut lent a la fin. *
+    * Le "forwards" c est pour que ça ne disparait pas a la fin et que ça reste a sa position final */
+    animation: h1anim 6s ease-in-out forwards;
+    /* Pour dire de ou part l animation, on peut faire en sort que sa part de gauchen, de droite du centre...*/
+    transform-origin: center;
+}
+
+/* Ici c est pour l animation*/
+@keyframes h1anim {
+    100% {
+        /* Lorsque la page va s ouvrire le trait va prendre ça forme initiale de 1 */
+        transform: translateX(-50%) scaleX(1);
+    }
+}
+
+
+
+.grid-container {
+    display: grid;
+    /* ".grid-container" a 2 enfants, la premiere va avoir 20% et la 2em va avoir 80% */
+    grid-template-columns: 20% 80%;
+}
+
+.polygon-container {
+    /* On veut mettre de l ombre a ".polygon", mais pour le mettre on est obliger de *
+    * passer par sont parent qui est "polynome-container" */
+    filter: drop-shadow(-1px 6px 3px var(--color2));
+    /* Ainsi sur les x et les y les elements sont parfaitements centrer (mais ici ça ne *
+    * veut pas fonctionner), il faut que le parent soit en "grid" pour que ça fonctionne, *
+    * on peut lui donner d autres position que l on veut*/
+    /* place-self: center; */
+}
+
+.polygon {
+    /* Ici on vient de donner une forme a notre div (a la base ça devais etre un polygon mais *
+    * j en ai fait qu a ma tete), j ai piquer  c est formes sur ce site https://bennettfeely.com/clippy/ */
+    clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
+    /* Ici on vient de faire un couleur gradient, on peut aussi le piquer sur ce site: *
+    * https://cssgradient.io/ */
+    background: linear-gradient(135deg, var(--color2) 0%, var(--color1) 100%);
+    height: calc(100% - 10px);
+}
+
+.polygon:after {
+    content: "un texte";
+    position: absolute;
+    color: var(--color2);
+    background: var(--color4);
+    top: 50%;
+    left: 50%;
+    /* Le probleme c est que elle est centrer au coin en haut a gauche, si on veut le centrer en sont *
+    * centre on va le translate de sa propre taille. *
+    * Le "rotate(90deg)" permet de faire une rotation de 90deg*/
+    transform: translate(-50%, -50%) rotate(317deg);
+    width: 90px;
+    padding: 4px;
+    text-align: center;
+}
+
+p {
+    /* Pour faire l espacement entre les lignes */
+    line-height: 26px;
+    margin: 20px 0;
+    text-align: justify;
+}
+
+/* Ainsi lorsqu on selectionne avec la souri le paragraphe, l ariere plan du texte devient rose et la couleur *
+* du texte devient noir */
+p::selection {
+    background: var(--color1);
+    color: var(--color3);
+}
+
+/* Avec les checkbox on peut creer un comportement, (un booleen) */
+.checkbox-container {
+    display: flex;
+    /* Ainsi ça les reparties bcp mieux */
+    justify-content: space-around;
+    margin: 20px 0 30px;
+    /* On a mis la perspective pour l effet 3D, on l a mis ici car c est le parent des label */
+    perspective: 100px;
+}
+
+/* Ici On fait disparaitre la boite des checkbox */
+input[type="checkbox"] {
+    display: none;
+}
+
+/* Comme ça quand on clique on a un moyen d agire sur le label qui suit, le "+" *
+* signifie que j agis sur la label qui suit. *
+* si j avais fait "~" a la place du "+" veut dire que tout les labels qui suivent tu leurs mettra ce style, *
+* mais c est pas ça qu on veut donc on mettra "+" pour le label qui suit */
+input[type="checkbox"]:checked+label {
+    /* Ici quand je clique la checkbox disparait */
+    /* display: none; */
+    background: var(--color2);
+    color: var(--color3);
+    /* Ainsi quand on clique dessus ça grandi de 10% */
+    transform: scale(1.1);
+    /* Ainsi quand on clique dessus ça va augmenter la luminausité de 120% */
+    filter: brightness(120%);
+}
+
+label {
+    /* Pour montrer que c est cliquable, comme ça quand on passe avec la souris la souris *
+    * devient une mains */
+    cursor: pointer;
+    border: 1px solid var(--color1);
+    background: var(--color3);
+    padding: 10px;
+    border-radius: 5px;
+    transition: 0.2s;
+    /* Quand un utilisateur double clique sur le bouton il peut selectionner le text du boutton, pour *
+    * eviter cela on utilise cette ligne de code */
+    user-select: none;
+}
+
+/* Pour dire que le premier du type label je veut qu il ai ce style suivant (c est pour l animation)*/
+label:first-of-type:hover {
+    /* Pour que ça le fait infiniment, et "linear"  pour que le mouvement soit tres lineaire,
+    * il y a aussi "alternate" qui lui donnera un coté un peut plus aleatoir*/
+    animation: label1 1s infinite linear;
+}
+
+/* Pour l animation */
+@keyframes label1 {
+    50% {
+        transform: scale(1.4);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Pour dire le label qui a le 4em enfant, on va faire de la 3D avec le 4em enfant et pour *
+* faire de la 3D il faut que le parent soit en perspective */
+label:nth-child(4):hover {
+    animation: label2 3s infinite linear;
+}
+
+/*Toujours pour la 3D, le parent doit etre en perspective (.checkbox-container)*/
+@keyframes label2 {
+    33% {
+        /* Pour la 3D c est "translateZ", si je donne un chiffren en positive l element va etre devant nous *
+        * a l inverse si je donne un chiffre en negative l element va aller nous */
+        transform: translateZ(30px);
+    }
+
+    66% {
+        transform: translateZ(-40px);
+    }
+
+    100% {
+        transform: translateZ(0);
+    }
+}
+
+.e-mail {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.e-mail input {
+    padding: 10px;
+    border-radius: 5px;
+    outline: none;
+    /* Elle fait 3px, elle est solide lais sa border est transparent */
+    border: 3px solid transparent;
+    transition: 0.3s;
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--color1);
+    /* Les trois lignes qui suivent sont trées pratiques car la largeur de base est de 35%, *
+    * mais lorsqu on va agrandire l ecran la largeur ne doit pas depasser 300px, et lorsqu on *
+    * va retrecir l ecran la largeur ne doit pas etre plus grand que 180px */
+    min-width: 100px;
+    width: 35%;
+    max-width: 300px;
+}
+
+/* Quand l input est focus (quand on interagis dessus, quand on clique dessus) */
+input[type="text"]:focus {
+    /* ça rend l'arriere plans transparent */
+    background: transparent;
+    border: 3px solid var(--color2);
+    border-radius: 150px;
+}
+
+input[type="text"]::placeholder {
+    color: var(--color2);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+button {
+    cursor: pointer;
+    background: var(--color2);
+    border: none;
+    font-size: 1.3rem;
+    padding: 10px 20px;
+    border-radius: 150px;
+    /* Le "auto" veut dire qu il prend autant a gauche qu a droite */
+    margin: 0 auto;
+    /* Pour faire passer le type du boutton de inline-block a block ainsi le boutton prend toute la largeur *
+    * c'est pour ça que souvent on arrive pas a centrer car nos elements ne sont pas en block */
+    display: block;
+    transition: 0.3s;
+}
+
+button:hover {
+    letter-spacing: 3px;
+}
+
+/* Ainsi lorsqu on clique sur l element elle grossit (le "active" permet de faire que c est lorsqu on clique) *
+* Ainsi l utilisateur sait qu il a cliquer car il y a eu une reaction (on peut aussi fait qu il y ai des couleurs)*/
+button:active {
+    transform: scale(1.2);
+}
+
+/* Quand je fait un hover du boutton, je veut que le "a" qui suivent ai le comportement suivante : elle reprend *
+* une opacité de 0 et ça position de base dans l axe des y. *
+* Mais c est que lorsqu on fait le hover que ça vient, mais aprées elle part lorsque je quite le hover *
+* donc on va rajouter le "a:hover" et comme en dessendant on sera sur le hover du a alors elle  va rester */
+button:hover+a,
+a:hover {
+    /* ** */
+    opacity: 1;
+    /* ** */
+    /* Pour que les conditions henerales s affiches */
+    visibility: visible;
+    /* ** */
+    transform: translateY(0);
+    /* ** */
+}
+
+a {
+    display: block;
+    color: var(--color2);
+    text-align: center;
+    opacity: 0.4;
+    /* ** */
+    /* Pour que les conditions generalees ne s affiche pas */
+    visibility: hidden;
+    /* ** */
+    /* On va le faire bouger sur l axe des y de 20px */
+    transform: translateY(20px);
+    /* ** */
+    transition: 0.3s;
+}
+
+/* Pour dire que lorsque le liens est visiter il faut qu elle change de couleur */
+a:visited {
+    color: var(--color1);
+}
+
+/* Bien, la ça va etre un peut plus technique, ce que l'on veut c est que l utilisateur *
+* lorsqu il s apprette a cliquer sur le boutton valider (lorsqu il y aura un hover du boutton) que les conditions generales *
+* d utilisation apparaiisent mais c est assez technique et dispersser dans tout les balises en css *
+* donc tout les lignes de codes qui auront a leurs fin ceci : " ** " *
+* sont utiliser pour */
+
+
+/* On va animer un vessaux ett le faire passer partout dans notre page */
+img {
+    height: 40px;
+    position: absolute;
+    filter: drop-shadow(0px 6px 3px rgba(255, 255, 0, 0.6));
+    /* Comme on veut que notre vaissaux soit deriere */
+    z-index: -1;
+    /* On va maintenant faire une animation, qu on va nomer guitard, qui va durer 60 secondes *
+    * elle se jouera a l infini en linear */
+    animation: guitard 60s infinite linear;
+}
+
+@keyframes guitard {
+    0% {
+        top: 2%;
+        left: 2%;
+        transform: rotate(90deg);
+    }
+
+    10% {
+        top: 6%;
+        left: 30%;
+        transform: rotate(90deg);
+    }
+
+    20% {
+        top: 9%;
+        left: 60%;
+        transform: rotate(90deg);
+    }
+
+    30% {
+        top: 0%;
+        left: 80%;
+        transform: rotate(90deg);
+    }
+
+    40% {
+        top: 20%;
+        left: 120%;
+        transform: rotate(90deg);
+    }
+
+    50% {
+        top: 50%;
+        left: 80%;
+        transform: rotate(90deg);
+    }
+
+    60% {
+        top: 90%;
+        left: 90%;
+        transform: rotate(90deg);
+    }
+
+    70% {
+        top: 110%;
+        left: 50%;
+        transform: rotate(90deg);
+    }
+
+    80% {
+        top: 85%;
+        left: 30%;
+        transform: rotate(90deg);
+    }
+
+    90% {
+        top: 50%;
+        left: 15%;
+        transform: rotate(90deg);
+    }
+
+    100% {
+        top: 2%;
+        left: 2%;
+        transform: rotate(90deg);
+    }
+}
